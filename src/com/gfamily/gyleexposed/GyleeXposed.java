@@ -34,16 +34,16 @@ public class GyleeXposed implements IXposedHookZygoteInit, IXposedHookInitPackag
 
   public GyleeXposed()
   {
-    BuildObjects();
-
-    try
-    {
-      InitializeFromSettings();
-    }
-    catch( Exception e )
-    {
-      WriteLog( e.getMessage() );
-    }
+//    BuildObjects();
+//
+//    try
+//    {
+//      InitializeFromSettings();
+//    }
+//    catch( Exception e )
+//    {
+//      WriteLog( e.getMessage() );
+//    }
   }
 
   private void InitializeFromSettings() throws Exception
@@ -97,14 +97,14 @@ public class GyleeXposed implements IXposedHookZygoteInit, IXposedHookInitPackag
   @Override
   public void initZygote( StartupParam startupParam ) throws Throwable
   {
-    // BuildObjects();
+     BuildObjects();
 
     WriteLog( "Handle init zygote." );
     _modulePath = startupParam.modulePath;
 
     try
     {
-      // InitializeFromSettings();
+       InitializeFromSettings();
     }
     catch( Exception e )
     {
