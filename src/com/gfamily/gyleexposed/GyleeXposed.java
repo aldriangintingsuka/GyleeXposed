@@ -3,6 +3,7 @@ package com.gfamily.gyleexposed;
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,7 +14,7 @@ import com.gfamily.gyleexposed.Business.Managers.IModManager;
 import com.gfamily.gyleexposed.Business.Managers.IScriptManager;
 import com.gfamily.gyleexposed.Model.GyleeScript;
 
-import android.content.res.XModuleResources;
+import android.content.pm.ApplicationInfo;
 import android.content.res.XResources;
 import android.os.Environment;
 import android.telephony.SignalStrength;
@@ -27,13 +28,15 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class GyleeXposed implements IXposedHookZygoteInit, IXposedHookInitPackageResources, IXposedHookLoadPackage
 {
   private String _modulePath;
-  private String _className;
+  private String _packageName;
   private ILogger _logger;
   private IScriptManager _scriptManager;
   private IModManager _modManager;
+  private Map<String, ApplicationInfo> _applicationInfoMap;
 
   public GyleeXposed()
   {
+    _applicationInfoMap = new HashMap<String, ApplicationInfo>();
 //    BuildObjects();
 //
 //    try
@@ -49,7 +52,7 @@ public class GyleeXposed implements IXposedHookZygoteInit, IXposedHookInitPackag
   private void InitializeFromSettings() throws Exception
   {
     File externalStorageDirectory = GetExternalStorageDirectory();
-    File scriptDirectory = new File( externalStorageDirectory, _className + "/Mods" );
+    File scriptDirectory = new File( externalStorageDirectory, _packageName + "/Mods" );
     String scriptFileName = "ModScript.txt";
 
     _scriptManager.LoadScript( scriptDirectory.getPath(), scriptFileName );
@@ -99,8 +102,8 @@ public class GyleeXposed implements IXposedHookZygoteInit, IXposedHookInitPackag
   {
      BuildObjects();
 
-    WriteLog( "Handle init zygote." );
     _modulePath = startupParam.modulePath;
+    WriteLog( "Handle init zygote : " + _modulePath );
 
     try
     {
@@ -121,13 +124,14 @@ public class GyleeXposed implements IXposedHookZygoteInit, IXposedHookInitPackag
   @Override
   public void handleLoadPackage( LoadPackageParam lpparam ) throws Throwable
   {
+    _applicationInfoMap.put( lpparam.packageName, lpparam.appInfo );
     HookSignalLevel( lpparam );
   }
 
   private void BuildObjects()
   {
-    _className = getClass().getName();
-    MainObjectGraphBuilder builder = new MainObjectGraphBuilder( _className + ": " );
+    _packageName = getClass().getPackage().getName();
+    MainObjectGraphBuilder builder = new MainObjectGraphBuilder( _packageName + ": " );
     Map<String, Object> objects = builder.BuildObjects();
 
     _logger = (ILogger) objects.get( "Logger" );
@@ -199,7 +203,6 @@ public class GyleeXposed implements IXposedHookZygoteInit, IXposedHookInitPackag
   {
     String packageName = resparam.packageName;
     XResources res = resparam.res;
-    XModuleResources modRes = XModuleResources.createInstance( _modulePath, res );
 
     Map<String, List<GyleeScript>> scripts = _scriptManager.GetScript( packageName );
     Set<String> resourceTypes = scripts.keySet();
@@ -209,7 +212,7 @@ public class GyleeXposed implements IXposedHookZygoteInit, IXposedHookInitPackag
       WriteLog( "Loading " + packageName + " for replacement of type " + resourceType );
 
       List<GyleeScript> scriptItems = scripts.get( resourceType );
-      _modManager.ReplaceResource( modRes, res, packageName, resourceType, scriptItems );
+      _modManager.ReplaceResource( res, packageName, resourceType, scriptItems );
     }
   }
 

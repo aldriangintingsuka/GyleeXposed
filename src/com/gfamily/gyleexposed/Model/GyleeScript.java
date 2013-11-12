@@ -1,18 +1,18 @@
 package com.gfamily.gyleexposed.Model;
 
+import java.util.Map;
+
 public class GyleeScript
 {
   private String _resourceName;
-  private String _replacementValue;
+  private Map<String, String> _replacement;
   private String _description;
-  private int _density;
 
-  public GyleeScript( String resourceName, String replacementValue, String description, int density )
+  public GyleeScript( String resourceName, Map<String, String> replacement, String description )
   {
     _resourceName = resourceName;
-    _replacementValue = replacementValue;
+    _replacement = replacement;
     _description = description;
-    _density = density;
   }
 
   public String GetResourceName()
@@ -20,18 +20,13 @@ public class GyleeScript
     return _resourceName;
   }
 
-  public String GetReplacementValue()
+  public Map<String, String> GetReplacement()
   {
-    return _replacementValue;
+    return _replacement;
   }
 
   public String GetDescription()
   {
     return _description;
-  }
-
-  public int GetDensity()
-  {
-    return _density;
   }
 }
