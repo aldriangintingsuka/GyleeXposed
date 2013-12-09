@@ -1,4 +1,5 @@
-GyleeXposed
+ReSource
 ===========
 
-This is my first trial to create an Xposed Framework module
+Xposed module to redirect drawables to a file or another resource in another package.
+
