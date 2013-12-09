@@ -1,8 +1,8 @@
-package com.gfamily.gyleexposed.Business.Managers;
+package com.gfamily.resource.Business.Managers;
 
 import java.util.List;
 
-import com.gfamily.gyleexposed.Model.GyleeScript;
+import com.gfamily.resource.Model.GyleeScript;
 
 import android.content.res.XResources;
 

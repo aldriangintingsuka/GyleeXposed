@@ -1,10 +1,10 @@
-package com.gfamily.gyleexposed.Builders;
+package com.gfamily.resource.Builders;
 
 import java.util.*;
 
-import com.gfamily.gyleexposed.Business.Logger.XposedBridgeLogger;
-import com.gfamily.gyleexposed.Business.Managers.ModManager;
-import com.gfamily.gyleexposed.Business.Managers.ScriptManager;
+import com.gfamily.common.logger.XposedBridgeLogger;
+import com.gfamily.resource.Business.Managers.ModManager;
+import com.gfamily.resource.Business.Managers.ScriptManager;
 
 public class MainObjectGraphBuilder
 {
@@ -17,11 +17,11 @@ public class MainObjectGraphBuilder
 
   public Map<String, Object> BuildObjects()
   {
-    Hashtable<String, Object> objects = new Hashtable<String, Object>();
+    HashMap<String, Object> objects = new HashMap<String, Object>();
 
-    XposedBridgeLogger logger = new XposedBridgeLogger( _className );
+    XposedBridgeLogger logger = new XposedBridgeLogger( _className + ": " );
     ScriptManager scriptManager = new ScriptManager( logger );
-    
+
     ModManager modManager = new ModManager( logger );
 
     objects.put( "Logger", logger );

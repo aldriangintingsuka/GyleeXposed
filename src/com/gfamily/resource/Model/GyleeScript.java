@@ -1,17 +1,18 @@
-package com.gfamily.gyleexposed.Model;
+package com.gfamily.resource.Model;
 
+import java.util.List;
 import java.util.Map;
 
 public class GyleeScript
 {
   private String _resourceName;
-  private Map<String, String> _replacement;
+  private List<Map<String, String>> _replacements;
   private String _description;
 
-  public GyleeScript( String resourceName, Map<String, String> replacement, String description )
+  public GyleeScript( String resourceName, List<Map<String, String>> replacements, String description )
   {
     _resourceName = resourceName;
-    _replacement = replacement;
+    _replacements = replacements;
     _description = description;
   }
 
@@ -20,9 +21,9 @@ public class GyleeScript
     return _resourceName;
   }
 
-  public Map<String, String> GetReplacement()
+  public List<Map<String, String>> GetReplacements()
   {
-    return _replacement;
+    return _replacements;
   }
 
   public String GetDescription()
