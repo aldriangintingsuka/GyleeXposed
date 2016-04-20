@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ReSource.iml" filepath="$PROJECT_DIR$/ReSource.iml" />
+      <module fileurl="file:///data-01/home/ian/Documents/Works/Gylee/ReSource/ReSource.iml" filepath="/data-01/home/ian/Documents/Works/Gylee/ReSource/ReSource.iml" />
       <module fileurl="file:///data-01/home/ian/Documents/Works/Gylee/ReSource/app/app.iml" filepath="/data-01/home/ian/Documents/Works/Gylee/ReSource/app/app.iml" />
     </modules>
   </component>
 </project>
-
